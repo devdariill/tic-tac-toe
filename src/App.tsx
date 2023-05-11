@@ -16,20 +16,23 @@ const GRID = Array.from(Array(9).keys());
 
 function App() {
   const [player, setPlayer] = useState<"X" | "O">("X");
-  // const [plays, setPlays] = useState<Map<number, "X" | "O">>(() => new Map());
-  const [plays, setPlays] = useState<Record<number, "X" | "O">>({});
+  const [plays, setPlays] = useState<Map<number, "X" | "O">>(() => new Map());
+  // const [plays, setPlays] = useState<Record<number, "X" | "O">>({});
 
   function handleClick(cell: number) {
-    if (plays[cell]) return;
-    const draft = {...plays, [cell]: player};
-    const winner = WINNER_COMBINATIONS.find((combination) =>
-      combination.every((cell) => draft[cell] === player),
+    if (plays.has(cell)) return;
+    const draft = new Map(plays).set(cell, player);
+    // const draft = {...plays, [cell]: player};
+    const winner = WINNER_COMBINATIONS.find(
+      (combination) => combination.every((cell) => draft.get(cell) === player),
+      // combination.every((cell) => draft[cell] === player),
     );
 
     setPlays(draft);
     if (winner) {
       alert(`${player} wins!`);
-      setPlays({});
+      setPlays(new Map());
+      // setPlays({});
 
       return;
     }
@@ -40,7 +43,7 @@ function App() {
     <main>
       {GRID.map((i) => (
         <button key={i} className="square" onClick={() => handleClick(i)}>
-          {plays[i]}
+          {plays.get(i)}
         </button>
       ))}
     </main>

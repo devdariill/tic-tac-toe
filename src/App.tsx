@@ -1,7 +1,7 @@
 // eslint-disable-next-line prettier/prettier
 import { useState } from "react";
 
-const WINNER_COMBINATIONS_TICTACTOE = [
+const WINNER_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -21,7 +21,18 @@ function App() {
 
   function handleClick(cell: number) {
     if (plays[cell]) return;
-    setPlays((playsState) => ({...playsState, [cell]: player}));
+    const draft = {...plays, [cell]: player};
+    const winner = WINNER_COMBINATIONS.find((combination) =>
+      combination.every((cell) => draft[cell] === player),
+    );
+
+    setPlays(draft);
+    if (winner) {
+      alert(`${player} wins!`);
+      setPlays({});
+
+      return;
+    }
     setPlayer((playerState) => (playerState === "X" ? "O" : "X"));
   }
 

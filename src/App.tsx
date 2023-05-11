@@ -30,8 +30,10 @@ function App() {
 
     setPlays(draft);
     if (winner) {
-      alert(`${player} wins!`);
-      setPlays(new Map());
+      setTimeout(() => {
+        alert(`${player} wins!`);
+        setPlays(new Map());
+      }, 100);
       // setPlays({});
 
       return;

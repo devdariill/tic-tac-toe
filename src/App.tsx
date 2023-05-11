@@ -1,3 +1,4 @@
+// eslint-disable-next-line prettier/prettier
 import { useState } from "react";
 
 const WINNER_COMBINATIONS_TICTACTOE = [
@@ -18,16 +19,16 @@ function App() {
   // const [plays, setPlays] = useState<Map<number, "X" | "O">>(() => new Map());
   const [plays, setPlays] = useState<Record<number, "X" | "O">>({});
 
-  function handleClick() {
-    // setPlays((playsState) => ({...playsState, [cell]: player}));
+  function handleClick(cell: number) {
+    setPlays((playsState) => ({...playsState, [cell]: player}));
     setPlayer((playerState) => (playerState === "X" ? "O" : "X"));
   }
 
   return (
     <main>
       {GRID.map((i) => (
-        <button key={i} className="square" onClick={handleClick}>
-          {/* {plays[i]} */}
+        <button key={i} className="square" onClick={() => handleClick(i)}>
+          {plays[i]}
         </button>
       ))}
     </main>

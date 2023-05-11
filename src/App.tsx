@@ -20,6 +20,7 @@ function App() {
   const [plays, setPlays] = useState<Record<number, "X" | "O">>({});
 
   function handleClick(cell: number) {
+    if (plays[cell]) return;
     setPlays((playsState) => ({...playsState, [cell]: player}));
     setPlayer((playerState) => (playerState === "X" ? "O" : "X"));
   }
